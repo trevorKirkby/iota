@@ -1,2 +1,2 @@
 # iota
-A Raspberry Pi based doorbell system.
+A little internet of things.
