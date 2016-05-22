@@ -1,0 +1,15 @@
+# List the files that are loaded on startup and can be triggered by actions.
+# Each pair is an alias and a file name.
+sounds:
+    doorbell-ring: doorbell.mp3
+    hour-chime: hour.wav
+    half-hour-chime: half.wav
+
+# List topics that we subscribe to.  For each topic, list each message
+# that we listen for and the corresponding sound that it triggers.
+actions:
+    topic: doorbell
+        pressed: doorbell-ring
+    topic: clock
+        on-hour: hour-chime
+        on-half-hour: half-hour-chime
