@@ -9,8 +9,12 @@ for soundfile in SOUNDFILES:
 	SOUNDS[soundfile] = pygame.mixer.Sound(soundfile)
 
 def playsound(soundname):
-	sound = SOUNDS[soundname]
+	try:
+		sound = SOUNDS[soundname]
+	except KeyError:
+		return 0
 	sound.play()
+	return 1
 
 while True:
 	index = raw_input("Enter the index of the sound file to play: ")

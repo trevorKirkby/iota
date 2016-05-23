@@ -1,4 +1,19 @@
 import paho.mqtt.client as mqtt
+import pygame.mixer
+
+SOUNDFILES = list()
+SOUNDS = dict()
+
+for soundfile in SOUNDFILES:
+	SOUNDS[soundfile] = pygame.mixer.Sound(soundfile)
+
+def playsound(soundname):
+	try:
+		sound = SOUNDS[soundname]
+	except KeyError:
+		return 0
+	sound.play()
+	return 1
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, rc):
@@ -9,7 +24,8 @@ def on_connect(client, userdata, rc):
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    print(str(msg.payload))
+    if not playsound(msg.payload):
+    	print "Error: \""+msg.paylod+"\" is not a valid file path."
 
 client = mqtt.Client()
 client.on_connect = on_connect
