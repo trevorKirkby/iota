@@ -1,9 +1,10 @@
 import paho.mqtt.client as mqtt
 import pygame.mixer
 
-SOUNDFILES = ['doorbell-1.mp3', 'doorbell-2.wav']
+SOUNDFILES = ['doorbell.wav',]
 SOUNDS = dict()
 
+# Sound files must be in OGG or uncompressed WAV format.
 for soundfile in SOUNDFILES:
 	SOUNDS[soundfile] = pygame.mixer.Sound(soundfile)
 
