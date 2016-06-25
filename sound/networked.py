@@ -12,6 +12,7 @@ def playsound(soundname):
 		sound = SOUNDS[soundname]
 	except KeyError:
 		return 0
+	print 'Playing [{0}]'.format(soundname)
 	sound.play()
 	return 1
 
@@ -31,7 +32,7 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect("10.0.1.38", 1883, 60)
+client.connect('pidev.local', 1883, 60)
 
 # Blocking call that processes network traffic, dispatches callbacks and
 # handles reconnecting.
