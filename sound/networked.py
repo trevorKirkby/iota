@@ -21,12 +21,12 @@ def on_connect(client, userdata, rc):
     print("Connected with result code "+str(rc))
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe("hello/world")
+    client.subscribe('alexa/play')
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     if not playsound(msg.payload):
-    	print "Error: \""+msg.paylod+"\" is not a valid file path."
+    	print "Error: \"" + msg.payload + "\" is not a valid file path."
 
 client = mqtt.Client()
 client.on_connect = on_connect
