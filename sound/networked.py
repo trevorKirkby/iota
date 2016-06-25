@@ -1,12 +1,26 @@
+import sys
+import os.path
 import paho.mqtt.client as mqtt
 import pygame.mixer
+
+pygame.mixer.init()
 
 SOUNDFILES = ['doorbell.wav',]
 SOUNDS = dict()
 
 # Sound files must be in OGG or uncompressed WAV format.
+# Loading an MP3 works fine but play() is silent?!
 for soundfile in SOUNDFILES:
-	SOUNDS[soundfile] = pygame.mixer.Sound(soundfile)
+	name, extension = os.path.splitext(soundfile)
+	if extension not in ('.wav',):
+		print 'Invalid soundfile extension for "{0}".'.format(soundfile)
+		sys.exit(-1)
+	print 'Loading [{0}]'.format(name)
+	try:
+		SOUNDS[name] = pygame.mixer.Sound(file=soundfile)
+	except pygame.error, e:
+		print 'Load error: {0}.'.format(e)
+		sys.exit(-1)
 
 def playsound(soundname):
 	try:
@@ -27,7 +41,7 @@ def on_connect(client, userdata, rc):
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     if not playsound(msg.payload):
-    	print "Error: \"" + msg.payload + "\" is not a valid file path."
+    	print 'Invalid sound name: {0}'.format(msg.payload)
 
 client = mqtt.Client()
 client.on_connect = on_connect
